@@ -153,9 +153,10 @@ td {
 	<table id="CurrentNewsTable"></table>
 	<br>
 	<form name="myForm" action="input_to_db.php" onsubmit="return validateForm()" method="POST" enctype="multipart/form-data">
-		<div id="TS" style="display: none;"><h3 style="color:red;">Use to edit only. if you don't want to do this please click reset button</h3><br>First time posted
+		<div id="TS" style="display: none;"><h3 style="color:red;">Use to edit only. if you don't want to do this please click reset button</h3><br>
+		News ID
 		<input type="text" name="newsTS" id="nnewsTS" readonly><br>
-		Last edit
+		POST ID
 		<input type="text" name="postTS" id="ppostTS" readonly><br><br></div>
 		Select image to upload:
 	    <input type="file" name="fileToUpload" id="fileToUpload"><br>
