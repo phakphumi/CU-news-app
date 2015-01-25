@@ -1,8 +1,8 @@
 <?PHP
 	$servername = "localhost";
-	$username = "tanwebsi_thinc";
-	$password = "hahaha";
-	$dbname = "tanwebsi_thinc";
+	$username = "thinc";
+	$password = "haha";
+	$dbname = $username;
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -50,30 +50,46 @@
     }
 	
 	// Check if $uploadOk is set to 0,10,20,30 by an error
-	if ($uploadOk == 0||$uploadOk == 10||$uploadOk == 20||$uploadOk == 30) {
-	 	switch($uploadOk){
-	 		case 0:
-	 			echo "File is not an image.<br>";
-	 			break;
-	 		case 10:
-	 			echo "Sorry, file's name already exists. Please rename your image file.<br>";
-	 			break;
- 			case 20:
-	 			echo "Sorry, your image file is too large.<br>";
-	 			break;
- 			case 30:
-	 			echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.<br>";
-	 			break;
-	 	}
-	 	echo "Your file and data were not uploaded.<br>";
-
-	// if everything is ok, try to upload file
-	} else {
-	    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-	        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.<br>";
-	    } else {
-	    	$uploadOk==0;
-	        echo "Sorry, there was an error uploading your file. Please send it again.<br>";
+	switch($uploadOk){
+ 		case 0:
+ 			echo "File is not an image.<br>";
+ 			echo "Your file and data were not uploaded.<br>";
+ 			break;
+ 		case 10:
+ 			echo "Sorry, file's name already exists. Please rename your image file.<br>";
+ 			echo "Your file and data were not uploaded.<br>";
+ 			break;
+			case 20:
+ 			echo "Sorry, your image file is larger than 300kb.<br>";
+ 			echo "Your file and data were not uploaded.<br>";
+ 			break;
+			case 30:
+ 			echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.<br>";
+ 			echo "Your file and data were not uploaded.<br>";
+ 			break;
+		// if everything is ok, try to upload file
+		 default :
+		 	//do below to resize image to 600*300 COMMENT JOE//
+		 	$maxWid = 600;
+		 	$maxHei = 300;
+	        list($width, $height, $type, $attr) = getimagesize( $_FILES['fileToUpload']['tmp_name'] );
+            $target_filename = $_FILES['fileToUpload']['tmp_name'];
+            $fn = $_FILES['fileToUpload']['tmp_name'];
+            $size = getimagesize( $fn );
+            $width = $maxWid;
+            $height = $maxHei;
+            $src = imagecreatefromstring( file_get_contents( $fn ) );
+            $dst = imagecreatetruecolor( $width, $height );
+            imagecopyresampled( $dst, $src, 0, 0, 0, 0, $width, $height, $size[0], $size[1] );
+            imagedestroy( $src );
+            imagepng( $dst, $target_filename ); // adjust format as needed
+            imagedestroy( $dst );
+	        
+		    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+		        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.<br>";
+		    } else {
+		    	$uploadOk==0;
+		        echo "Sorry, there was an error uploading your file. Please send it again.<br>";
 	    }
 	}
 	
