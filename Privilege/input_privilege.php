@@ -1,8 +1,8 @@
 <?PHP
 	$servername = "localhost";
-	$username = "thinc";
-	$password = "haha";
-	$dbname = $username;
+	$username = "tanwebsi_thinc";
+	$password = "hahaha";
+	$dbname = "tanwebsi_thinc";
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -69,22 +69,6 @@
  			break;
 		// if everything is ok, try to upload file
 		 default :
-		 	//do below to resize image to 600*300 COMMENT JOE//
-		 	$maxWid = 600;
-		 	$maxHei = 300;
-	        list($width, $height, $type, $attr) = getimagesize( $_FILES['fileToUpload']['tmp_name'] );
-            $target_filename = $_FILES['fileToUpload']['tmp_name'];
-            $fn = $_FILES['fileToUpload']['tmp_name'];
-            $size = getimagesize( $fn );
-            $width = $maxWid;
-            $height = $maxHei;
-            $src = imagecreatefromstring( file_get_contents( $fn ) );
-            $dst = imagecreatetruecolor( $width, $height );
-            imagecopyresampled( $dst, $src, 0, 0, 0, 0, $width, $height, $size[0], $size[1] );
-            imagedestroy( $src );
-            imagepng( $dst, $target_filename ); // adjust format as needed
-            imagedestroy( $dst );
-	        
 		    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 		        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.<br>";
 		    } else {

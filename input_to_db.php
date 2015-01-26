@@ -11,7 +11,7 @@
 	    die("Connection failed: " . $conn->connect_error);
 	}
 	$conn->set_charset("utf8");
-
+if($_POST){
 	//do below to check who is moderator COMMENT JOE//
 	$tmp = $_POST["editor"];
 	$sql = "SELECT m_id,username FROM moderator";
@@ -151,10 +151,6 @@
 				}
 			}
 		}
-
-
-
-
 	} else { //do below if user posts new topic COMMENT JOE//
 		if(empty($_FILES["fileToUpload"]["name"])){ //do this if file was not uploaded COMMENT JOE//
 			$temp=$_POST;
@@ -253,5 +249,18 @@
 			}
 		}
 	}
+}elseif($_GET){
+	$dataDel = $_GET['postTS'];
+
+	$sql="UPDATE news SET del=1 WHERE postTS = $dataDel";
+		if ($conn->query($sql) === TRUE) {
+			echo "Record deleted successfully<br>";
+		} else {
+		    echo "Error: " . $sql . "<br>" . $conn->error;
+		}
+	
+
+}
+
 	$conn->close();
 ?>

@@ -95,7 +95,11 @@ td {
 		});
 		$("#CurrentNewsTable").on('click','tbody tr td.del',function(){
 		    if (confirm("Are you sure to delete topic "+$(this).parent().children(".dataTitle").html()) == true) {
-		        
+		        $dataDel = $(this).parent().children(".dataPost").html();
+		        function newDoc() {
+				    window.location.assign("input_to_db.php?postTS="+$dataDel);
+				}
+				newDoc();
 		    } else {
 		    }
 	   
