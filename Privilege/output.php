@@ -37,7 +37,7 @@
 		//$result = $conn->query($sql);
 		//echo $result;
 
-		$sql = "SELECT newsTS,postTS,data FROM privilege WHERE postTS > $LastSyncTime ORDER BY u_id desc";
+		$sql = "SELECT newsTS,postTS,data FROM privilege WHERE postTS > $LastSyncTime,del=0 ORDER BY u_id desc";
 		$result = $conn->query($sql);
 	}
     //$stmt = $conn->prepare("SELECT newsTS,postTS,data FROM news WHERE `delete` = 0 ORDER BY u_id desc");
